@@ -40,6 +40,16 @@ public:
         clear;
     }
 
+    /++
+     + Stores an element in the handle manager, returning a unique handle for
+     + that element.
+     +
+     + Params:
+     +   object - The element to store in the handle manager.
+     +
+     + Returns:
+     +   A handle referring to the element that was stored in the handle manager.
+     ++/
     Handle!T add(T object)
     in
     {
@@ -66,6 +76,9 @@ public:
     @property
     enum size_t capacity = entryCount;
 
+    /++
+     + Clears the handle manager, returning it to its initial state.
+     ++/
     void clear()
     {
         _activeCount    = 0;
@@ -80,6 +93,18 @@ public:
         _entries[$ - 1] = HandleEntry(0);
     }
 
+    /++
+     + Retrieves an element from the handle manager by its handle. If no element
+     + exists at the handle, or the handle is no longer valid, null is returned.
+     + If the type of the stored element cannot store null, an exception is
+     + raised instead.
+     +
+     + Params:
+     +   handle - The handle of the element being accessed.
+     +
+     + Returns:
+     +   An element stored in the handle manager.
+     ++/
     T get(Handle!T handle) const
     {
         T value;
@@ -102,6 +127,17 @@ public:
         }
     }
 
+    /++
+     + Retrieves an element from the handle manager by its handle, storing the
+     + result in an out parameter.
+     +
+     + Params:
+     +   handle - The handle of the element being accessed.
+     +   object - The out parameter in which the result is stored.
+     +
+     + Returns:
+     +   true if the handle was valid and referred to an element, false otherwise.
+     ++/
     bool get(Handle!T handle, out T object) const
     in
     {
@@ -118,6 +154,12 @@ public:
         return false;
     }
 
+    /++
+     + Returns the number of elements currently stored in the handle manager.
+     +
+     + Returns:
+     +   The length of the handle manager.
+     ++/
     @property
     size_t length() const
     {
@@ -141,6 +183,15 @@ public:
         }
     }
 
+    /++
+     + Removes an element from the handle manager.
+     +
+     + Params:
+     +   handle - The handle of the element being removed.
+     +
+     + Returns:
+     +   true if the handle was valid and an element was removed, false otherwise.
+     ++/
     bool remove(Handle!T handle)
     in
     {
@@ -165,6 +216,16 @@ public:
         return false;
     }
 
+    /++
+     + Replaces the element referred to by a handle in the handle manager.
+     +
+     + Params:
+     +   handle - The handle of the element being replaced.
+     +   object - The new value of the handle.
+     +
+     + Returns:
+     +   true if the handle was valid and an element was replaced, false otherwise.
+     ++/
     bool replace(Handle!T handle, T object)
     in
     {
