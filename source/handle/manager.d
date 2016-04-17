@@ -129,6 +129,18 @@ public:
         return get(handle);
     }
 
+    T opIndexAssign(T object, Handle!T handle)
+    {
+        if(replace(handle, object))
+        {
+            return object;
+        }
+        else
+        {
+            assert(0, "No value exists at handle.");
+        }
+    }
+
     bool remove(Handle!T handle)
     in
     {
