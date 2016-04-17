@@ -5,6 +5,8 @@ Handles are a fast and light-weight alternative to conventional or reference-cou
 
 # A Short Example
 
+Below is a brief example of handles used to store strings. Any type can be used, however.
+
 ```d
 import handle;
 
@@ -23,6 +25,22 @@ void main()
     // Handles will never dangle.
     manager.remove(handle);
     assert(manager[handle] is null);
+}
+```
+
+## Capacity
+
+Internally, the `HandleManager` class operates on a static array of predefined size (as a performance optimization). The default capacity of a HandleManager is 4096 (`2 ^^ 12`), but it accepts a second template argument as an override. For example,
+
+```d
+void main()
+{
+    // Allocate enough storage for 500 handles.
+    auto manager = new HandleManager!(string, 500);
+
+    static assert(manager.capacity == 500);
+    
+    // . . .
 }
 ```
 
