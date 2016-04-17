@@ -1,6 +1,8 @@
 
 module handle.handle;
 
+import std.traits;
+
 struct Handle(T)
 {
 private:
@@ -20,8 +22,8 @@ public:
         return _index;
     }
 
-    I opCast(I : uint)()
+    I opCast(I)() if(isIntegral!I)
     {
-        return cast(uint) _counter << 16 | _index;
+        return cast(I) _counter << 16 | _index;
     }
 }
